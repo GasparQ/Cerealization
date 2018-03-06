@@ -8,7 +8,7 @@
 #include <tuple>
 #include <memory>
 
-namespace Ceralization
+namespace Cerealization
 {
     template <typename First, typename ... Args>
     class Tuple
