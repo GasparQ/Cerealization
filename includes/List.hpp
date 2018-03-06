@@ -7,10 +7,13 @@
 
 #include <type_traits>
 #include <vector>
+#include <list>
+#include <set>
+#include <unordered_set>
 
 namespace Cerealization
 {
-    template <typename Element, typename Iterable = std::vector<Element>>
+    template <typename Element, typename Iterable = std::list<Element>>
     class List
     {
     public:
@@ -51,6 +54,17 @@ namespace Cerealization
         Iterable *iterable;
         const bool allocated;
     };
+
+    using String = List<char, std::string>;
+
+    template <typename T>
+    using Vector = std::vector<T>;
+
+    template <typename T>
+    using Set = std::set<T>;
+
+    template <typename T>
+    using USet = std::unordered_set<T>;
 }
 
 #endif //CEREALIZATION_LIST_HPP

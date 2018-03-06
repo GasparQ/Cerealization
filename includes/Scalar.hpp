@@ -25,9 +25,9 @@ namespace Cerealization
 
         }
 
-        explicit Scalar(T &&value) :
+        Scalar(T const &value) :
                 tohandle(new T(value)),
-                allocated(true)
+                allocated(true )
         {
 
         }
@@ -48,6 +48,17 @@ namespace Cerealization
         T *tohandle;
         const bool allocated;
     };
+
+    using Char = Scalar<char>;
+    using UChar = Scalar<unsigned char>;
+    using Short = Scalar<short>;
+    using UShort = Scalar<unsigned short>;
+    using Int = Scalar<int>;
+    using UInt = Scalar<unsigned int>;
+    using Long = Scalar<long>;
+    using ULong = Scalar<unsigned long>;
+    using LongLong = Scalar<long long>;
+    using ULongLong = Scalar<unsigned long long>;
 }
 
 #endif //CEREALIZATION_SCALAR_HPP

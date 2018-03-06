@@ -45,21 +45,21 @@ namespace Cerealization
     public:
         explicit Tuple(First &fattr, Args &... attributes) :
                 data{&fattr, (&attributes)...},
-                allocated(false)
+                allocated{false}
         {
 
         }
 
         explicit Tuple(First &&fval, Args &&... values) :
                 data{new First(fval), (new Args(values))...},
-                allocated(true)
+                allocated{true}
         {
 
         }
 
         explicit Tuple() :
                 data{new First(), (new Args())...},
-                allocated(true)
+                allocated{true}
         {
 
         }
