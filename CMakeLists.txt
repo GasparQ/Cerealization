@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.8)
-project(Cerealization)
+project(Cerealizable)
 
 set(CMAKE_CXX_STANDARD 14)
 
-FILE(GLOB INCLUDE_FILES includes/*.hpp)
+FILE(GLOB CEREAL_INCLUDES Cerealizable/*.hpp Cerealizer/*/*.hpp)
 
-FILE(GLOB SOURCE_FILES main.cpp src/*.cpp)
+FILE(GLOB CEREAL_SOURCES main.cpp src/*.cpp Cerealizer/*/*.cpp)
 
-include_directories(includes)
+include_directories(Cerealizable)
 
-add_executable(Cerealization ${SOURCE_FILES} ${INCLUDE_FILES})
+add_executable(Cerealizable ${CEREAL_SOURCES} ${CEREAL_INCLUDES})

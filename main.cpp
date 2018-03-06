@@ -36,7 +36,7 @@ public:
     }
 };
 
-class Test2 : public Cerealization::Tuple<int, int>
+class Test2 : public Cerealization::Cerealizable::Tuple<int, int>
 {
 public:
     Test2() :
@@ -52,7 +52,7 @@ private:
     int b;
 };
 
-class Test3 : public Cerealization::List<int, std::list<int>>
+class Test3 : public Cerealization::Cerealizable::List<int, std::list<int>>
 {
 public:
     Test3() :
@@ -66,7 +66,7 @@ private:
     std::list<int> toto;
 };
 
-class Test1 : public Cerealization::Scalar<int>
+class Test1 : public Cerealization::Cerealizable::Scalar<int>
 {
 public:
     Test1() :
@@ -80,7 +80,7 @@ private:
     int x;
 };
 
-class TestJson : public Cerealization::Object <int, int>
+class TestJson : public Cerealization::Cerealizable::Object <int, int>
 {
 public:
     TestJson() :
@@ -100,10 +100,10 @@ private:
 
 int main()
 {
-    Cerealization::Scalar<int> titi(42);
-    Cerealization::Tuple<int, int> toto(2, 3);
-    Cerealization::List<int> tata{3, 2, 1, 4, 2, 3};
-    Cerealization::Object<int, int> obj{
+    Cerealization::Cerealizable::Scalar<int> titi(42);
+    Cerealization::Cerealizable::Tuple<int, int> toto(2, 3);
+    Cerealization::Cerealizable::List<int> tata{3, 2, 1, 4, 2, 3};
+    Cerealization::Cerealizable::Object<int, int> obj{
                                                 std::make_pair("x", 30),
                                                 std::make_pair("y", 41)
                                         };
