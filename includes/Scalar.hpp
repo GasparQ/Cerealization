@@ -1,0 +1,8 @@
+//
+// Created by GasparQ on 05/03/2018.
+//
+
+#ifndef CEREALIZATION_SCALAR_HPP
+#define CEREALIZATION_SCALAR_HPP
+
+#endif //CEREALIZATION_SCALAR_HPP
