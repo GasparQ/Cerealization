@@ -15,21 +15,30 @@ namespace Cerealization
     {
     public:
         explicit List(Iterable &towatch) :
-                iterable(&towatch)
+                iterable(&towatch),
+                allocated(false)
         {
 
         }
 
         List(std::initializer_list<Element> &&value) :
-                iterable{new Iterable{value}}
+                iterable{new Iterable{value}},
+                allocated(true)
         {
 
         }
 
         explicit List() :
-                iterable(new Iterable())
+                iterable(new Iterable()),
+                allocated(true)
         {
 
+        }
+
+        virtual ~List()
+        {
+            if (allocated)
+                delete(iterable);
         }
 
     public:
@@ -40,6 +49,7 @@ namespace Cerealization
 
     private:
         Iterable *iterable;
+        const bool allocated;
     };
 }
 
