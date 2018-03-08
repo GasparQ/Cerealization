@@ -10,6 +10,7 @@
 #include <list>
 #include <set>
 #include <unordered_set>
+#include <map>
 
 namespace Cerealization
 {
@@ -22,6 +23,13 @@ namespace Cerealization
             explicit List(Iterable &towatch) :
                     iterable(&towatch),
                     allocated(false)
+            {
+
+            }
+
+            explicit List(Iterable const &value) :
+                    iterable{new Iterable(value)},
+                    allocated(true)
             {
 
             }
@@ -47,9 +55,25 @@ namespace Cerealization
             }
 
         public:
-            Iterable &get() const
+            Iterable &get()
             {
                 return *iterable;
+            }
+
+            const Iterable &get() const
+            {
+                return *iterable;
+            }
+
+        public:
+            void push_back(Element const &ref) const
+            {
+                iterable->insert(iterable->end(), ref);
+            }
+
+            void clear() const
+            {
+                iterable->clear();
             }
 
         private:
@@ -58,15 +82,19 @@ namespace Cerealization
         };
 
         using String = List<char, std::string>;
+        using CString = List<const char, const std::string>;
 
         template <typename T>
-        using Vector = std::vector<T>;
+        using Vector = List<T, std::vector<T>>;
 
         template <typename T>
-        using Set = std::set<T>;
+        using Set = List<T, std::set<T>>;
 
         template <typename T>
-        using USet = std::unordered_set<T>;
+        using USet = List<T, std::unordered_set<T>>;
+
+        template <typename Key, typename Value>
+        using Map = List<std::pair<Key, Value>, std::map<Key, Value>>;
     }
 }
 

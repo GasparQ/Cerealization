@@ -43,6 +43,11 @@ namespace Cerealization
                 return *tohandle;
             }
 
+            const T &get() const
+            {
+                return *tohandle;
+            }
+
         private:
             T          *tohandle;
             const bool allocated;
@@ -58,6 +63,8 @@ namespace Cerealization
         using ULong = Scalar<unsigned long>;
         using LongLong = Scalar<long long>;
         using ULongLong = Scalar<unsigned long long>;
+        using Float = Scalar<float>;
+        using Double = Scalar<double>;
     }
 }
 

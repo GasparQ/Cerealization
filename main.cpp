@@ -1,12 +1,15 @@
 #include <iostream>
 #include <string>
 #include <list>
+#include <cassert>
 
-#include <List.hpp>
-#include <Scalar.hpp>
-#include <Object.hpp>
+#include "Cerealizable/List.hpp"
+#include "Cerealizable/Object.hpp"
+#include "Cerealizable/Scalar.hpp"
+#include "Cerealizable/Tuple.hpp"
 
-#include "Tuple.hpp"
+#include "Cerealizer/Binary/BinaryStream.hpp"
+#include "Cerealizer/Binary/Operations.hpp"
 
 class Tutu
 {
@@ -47,6 +50,12 @@ public:
 
     }
 
+public:
+    bool operator==(Test2 const &ref) const
+    {
+        return a == ref.a && b == ref.b;
+    }
+
 private:
     int a;
     int b;
@@ -62,6 +71,12 @@ public:
 
     }
 
+public:
+    bool operator==(Test3 const &ref) const
+    {
+        return toto == ref.toto;
+    }
+
 private:
     std::list<int> toto;
 };
@@ -74,6 +89,12 @@ public:
         x(50)
     {
 
+    }
+
+public:
+    bool operator==(Test1 const &ref) const
+    {
+        return x == ref.x;
     }
 
 private:
@@ -94,9 +115,28 @@ public:
 
     }
 
+public:
+    bool operator==(TestJson const &ref) const
+    {
+        return x == ref.x && y == ref.y;
+    }
+
 private:
     int x, y;
 };
+
+template <typename T>
+void TestSerial(T const &data)
+{
+    Cerealization::Cerealizer::BinaryStream cerealizer;
+    T witness;
+
+    cerealizer << data;
+
+    cerealizer >> witness;
+
+    assert(data == witness);
+}
 
 int main()
 {
@@ -142,6 +182,10 @@ int main()
 
     testJson.forEach(runner);
 
-    std::cout << "Hello, World!" << std::endl;
+    TestSerial(test1);
+    TestSerial(test2);
+    TestSerial(test3);
+    TestSerial(testJson);
+
     return 0;
 }

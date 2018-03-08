@@ -117,6 +117,20 @@ namespace Cerealization
                 tocall(*last);
             }
 
+        public:
+            template <typename Callable>
+            void apply(Callable const &tocall) const
+            {
+                _apply(tocall, seq());
+            }
+
+        private:
+            template <typename Callable, size_t ... idxs>
+            void _apply(Callable const &tocall, seqT<idxs...>) const
+            {
+                tocall((*std::get<idxs>(data))...);
+            }
+
         private:
             DataType data;
             const bool allocated;

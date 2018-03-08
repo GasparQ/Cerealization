@@ -7,6 +7,6 @@ FILE(GLOB CEREAL_INCLUDES Cerealizable/*.hpp Cerealizer/*/*.hpp)
 
 FILE(GLOB CEREAL_SOURCES main.cpp src/*.cpp Cerealizer/*/*.cpp)
 
-include_directories(Cerealizable)
+include_directories(${CMAKE_SOURCE_DIR})
 
 add_executable(Cerealizable ${CEREAL_SOURCES} ${CEREAL_INCLUDES})
