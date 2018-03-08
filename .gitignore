@@ -29,3 +29,5 @@
 
 .idea
 cmake-build-debug
+cmake-install
+CerealLib

@@ -3,7 +3,7 @@
 //
 
 #include <cstring>
-#include "BinaryStream.hpp"
+#include "Cerealizer/Binary/BinaryStream.hpp"
 
 #define my_min(a, b) ((a) < (b) ? (a) : (b))
 

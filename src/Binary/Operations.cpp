@@ -2,8 +2,8 @@
 // Created by GasparQ on 07/03/2018.
 //
 
-#include "DefaultOperations.hpp"
-#include "Operations.hpp"
+#include "Cerealizer/Binary/DefaultOperations.hpp"
+#include "Cerealizer/Binary/Operations.hpp"
 #include "Cerealizable/List.hpp"
 
 using namespace Cerealization::Cerealizer;

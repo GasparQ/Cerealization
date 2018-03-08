@@ -2,7 +2,7 @@
 // Created by GasparQ on 05/03/2018.
 //
 
-#include "JSONStream.hpp"
+#include "Cerealizer/JSON/JSONStream.hpp"
 
 Cerealization::Cerealizer::JSONStream::JSONStream(const Cerealization::Cerealizer::JSONStream &ref) :
     buffer(ref.buffer.str())
