@@ -14,10 +14,10 @@ namespace Cerealization
         class BinaryTuple
         {
         public:
-            class Cerealizer
+            class Cereal
             {
             public:
-                explicit Cerealizer(BinaryStream &out) :
+                explicit Cereal(Cerealization::Cerealizer::BinaryStream &out) :
                         out(out)
                 {
 
@@ -30,13 +30,13 @@ namespace Cerealization
                 }
 
             private:
-                BinaryStream &out;
+                Cerealization::Cerealizer::BinaryStream &out;
             };
 
-            class Decerealizer
+            class Decereal
             {
             public:
-                explicit Decerealizer(BinaryStream &out) :
+                explicit Decereal(BinaryStream &out) :
                         out(out)
                 {
 

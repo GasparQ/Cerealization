@@ -7,9 +7,9 @@
 
 #include <string>
 
+#include "Cerealizable/List.hpp"
 #include "BinaryStream.hpp"
 #include "DefaultOperations.hpp"
-#include "Cerealizable/List.hpp"
 
 namespace Cerealization
 {
@@ -18,10 +18,10 @@ namespace Cerealization
         class BinaryObject
         {
         public:
-            class Cerealizer
+            class Cereal
             {
             public:
-                explicit Cerealizer(BinaryStream &out) :
+                explicit Cereal(Cerealizer::BinaryStream &out) :
                         out(out)
                 {
 
@@ -34,10 +34,27 @@ namespace Cerealization
                 }
 
             private:
-                BinaryStream &out;
+                Cerealizer::BinaryStream &out;
             };
 
+            class Decereal
+            {
+            public:
+                explicit Decereal(BinaryStream &out) :
+                        out(out)
+                {
 
+                }
+
+                template <typename T>
+                void operator()(std::string &name, T &data)
+                {
+                    out >> name >> data;
+                }
+
+            private:
+                BinaryStream &out;
+            };
         };
     }
 }

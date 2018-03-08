@@ -5,6 +5,8 @@
 #include <cstring>
 #include "BinaryStream.hpp"
 
+#define my_min(a, b) ((a) < (b) ? (a) : (b))
+
 Cerealization::Cerealizer::BinaryStream::BinaryStream() :
     buffer(),
     rindex(0)
@@ -27,7 +29,7 @@ Cerealization::Cerealizer::BinaryStream::BinaryStream(Byte *data, size_t size) :
 
 size_t Cerealization::Cerealizer::BinaryStream::Read(Byte *dst, size_t size)
 {
-    size_t read = std::min(size, Size());
+    size_t read = my_min(size, Size());
 
     std::memcpy(dst, Data(), read);
     rindex += read;

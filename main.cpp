@@ -8,8 +8,8 @@
 #include "Cerealizable/Scalar.hpp"
 #include "Cerealizable/Tuple.hpp"
 
-#include "Cerealizer/Binary/BinaryStream.hpp"
-#include "Cerealizer/Binary/Operations.hpp"
+#include "Cerealizer/Binary/Binary.hpp"
+#include "Cerealizer/JSON/JSON.hpp"
 
 class Tutu
 {
@@ -39,6 +39,26 @@ public:
     }
 };
 
+class Test1 : public Cerealization::Cerealizable::Scalar<int>
+{
+public:
+    Test1() :
+            Scalar(x),
+            x(50)
+    {
+
+    }
+
+public:
+    bool operator==(Test1 const &ref) const
+    {
+        return x == ref.x;
+    }
+
+private:
+    int x;
+};
+
 class Test2 : public Cerealization::Cerealizable::Tuple<int, int>
 {
 public:
@@ -61,7 +81,7 @@ private:
     int b;
 };
 
-class Test3 : public Cerealization::Cerealizable::List<int, std::list<int>>
+class Test3 : public Cerealization::Cerealizable::List<int, std::vector<int>>
 {
 public:
     Test3() :
@@ -78,27 +98,7 @@ public:
     }
 
 private:
-    std::list<int> toto;
-};
-
-class Test1 : public Cerealization::Cerealizable::Scalar<int>
-{
-public:
-    Test1() :
-        Scalar(x),
-        x(50)
-    {
-
-    }
-
-public:
-    bool operator==(Test1 const &ref) const
-    {
-        return x == ref.x;
-    }
-
-private:
-    int x;
+    std::vector<int> toto;
 };
 
 class TestJson : public Cerealization::Cerealizable::Object <int, int>
@@ -125,13 +125,16 @@ private:
     int x, y;
 };
 
-template <typename T>
+template <typename Cereal, typename T>
 void TestSerial(T const &data)
 {
-    Cerealization::Cerealizer::BinaryStream cerealizer;
+    Cereal cerealizer;
     T witness;
 
     cerealizer << data;
+
+    if (std::is_same<decltype(cerealizer.Data()), std::string>::value)
+        std::cout << cerealizer.Data() << std::endl;
 
     cerealizer >> witness;
 
@@ -182,10 +185,15 @@ int main()
 
     testJson.forEach(runner);
 
-    TestSerial(test1);
-    TestSerial(test2);
-    TestSerial(test3);
-    TestSerial(testJson);
+    TestSerial<Cerealization::Cerealizer::BinaryStream>(test1);
+    TestSerial<Cerealization::Cerealizer::BinaryStream>(test2);
+    TestSerial<Cerealization::Cerealizer::BinaryStream>(test3);
+    TestSerial<Cerealization::Cerealizer::BinaryStream>(testJson);
+
+    TestSerial<Cerealization::Cerealizer::JSONStream>(test1);
+    TestSerial<Cerealization::Cerealizer::JSONStream>(test2);
+    TestSerial<Cerealization::Cerealizer::JSONStream>(test3);
+    TestSerial<Cerealization::Cerealizer::JSONStream>(testJson);
 
     return 0;
 }

@@ -2,8 +2,8 @@
 // Created by GasparQ on 07/03/2018.
 //
 
-#ifndef CEREALIZABLE_DEFAULTOPERATIONS_HPP
-#define CEREALIZABLE_DEFAULTOPERATIONS_HPP
+#ifndef CEREALIZABLE_BINARY_DEFAULTOPERATIONS_HPP
+#define CEREALIZABLE_BINARY_DEFAULTOPERATIONS_HPP
 
 #include <string>
 #include "BinaryStream.hpp"
@@ -36,4 +36,4 @@ Cerealization::Cerealizer::BinaryStream &operator>>(Cerealization::Cerealizer::B
 Cerealization::Cerealizer::BinaryStream &operator>>(Cerealization::Cerealizer::BinaryStream &output, double &data);
 Cerealization::Cerealizer::BinaryStream &operator>>(Cerealization::Cerealizer::BinaryStream &output, std::string &data);
 
-#endif //CEREALIZABLE_DEFAULTOPERATIONS_HPP
+#endif //CEREALIZABLE_BINARY_DEFAULTOPERATIONS_HPP

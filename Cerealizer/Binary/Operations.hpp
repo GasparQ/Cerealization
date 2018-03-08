@@ -2,8 +2,8 @@
 // Created by GasparQ on 07/03/2018.
 //
 
-#ifndef CEREALIZABLE_OPERATIONS_HPP
-#define CEREALIZABLE_OPERATIONS_HPP
+#ifndef CEREALIZABLE_BINARY_OPERATIONS_HPP
+#define CEREALIZABLE_BINARY_OPERATIONS_HPP
 
 #include "Cerealizable/Scalar.hpp"
 #include "Cerealizable/List.hpp"
@@ -35,58 +35,23 @@ BinaryStream &operator<<(BinaryStream &output, List<Element, Iterable> const &da
         ++size;
     }
     output << size << cpy;
+    return output;
 }
 
-//class BinaryTupleCerealizer
-//{
-//public:
-//    explicit BinaryTupleCerealizer(BinaryStream &out) :
-//        out(out)
-//    {
-//
-//    }
-//
-//    template <typename T>
-//    void operator()(T const &dat)
-//    {
-//        out << dat;
-//    }
-//
-//private:
-//    BinaryStream &out;
-//};
 template <typename First, typename ... Nexts>
 BinaryStream &operator<<(BinaryStream &output, Tuple<First, Nexts...> const &data)
 {
-    BinaryTuple::Cerealizer ser(output);
+    BinaryTuple::Cereal ser(output);
 
     data.forEach(ser);
 
     return output;
 }
 
-//class BinaryObjectCerealizer
-//{
-//public:
-//    explicit BinaryObjectCerealizer(BinaryStream &out) :
-//            out(out)
-//    {
-//
-//    }
-//
-//    template <typename T>
-//    void operator()(std::string const &name, T const &data)
-//    {
-//        out << name << data;
-//    }
-//
-//private:
-//    BinaryStream &out;
-//};
 template <typename First, typename ... Nexts>
 BinaryStream &operator<<(BinaryStream &output, Object<First, Nexts...> const &data)
 {
-    BinaryObject::Cerealizer ser(output);
+    BinaryObject::Cereal ser(output);
 
     data.forEach(ser);
 
@@ -116,60 +81,25 @@ BinaryStream &operator>>(BinaryStream &output, List<Element, Iterable> const &da
     return output;
 }
 
-//class BinaryTupleDecerealizer
-//{
-//public:
-//    explicit BinaryTupleDecerealizer(BinaryStream &out) :
-//            out(out)
-//    {
-//
-//    }
-//
-//    template <typename T>
-//    void operator()(T &data)
-//    {
-//        out >> data;
-//    }
-//
-//private:
-//    BinaryStream &out;
-//};
 template <typename First, typename ... Nexts>
 BinaryStream &operator>>(BinaryStream &output, Tuple<First, Nexts...> const &data)
 {
-    BinaryTuple::Decerealizer des(output);
+    BinaryTuple::Decereal des(output);
 
     data.forEach(des);
 
     return output;
 }
 
-class BinaryObjectDecerealizer
-{
-public:
-    explicit BinaryObjectDecerealizer(BinaryStream &out) :
-            out(out)
-    {
 
-    }
-
-    template <typename T>
-    void operator()(std::string &name, T &data)
-    {
-        out >> name >> data;
-    }
-
-private:
-    BinaryStream &out;
-};
 template <typename First, typename ... Nexts>
 BinaryStream &operator>>(BinaryStream &output, Object<First, Nexts...> const &data)
 {
-    BinaryObjectDecerealizer des(output);
+    BinaryObject::Decereal des(output);
 
     data.forEach(des);
 
     return output;
 }
 
-#endif //CEREALIZABLE_OPERATIONS_HPP
+#endif //CEREALIZABLE_BINARY_OPERATIONS_HPP

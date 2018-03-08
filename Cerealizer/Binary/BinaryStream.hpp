@@ -2,8 +2,8 @@
 // Created by GasparQ on 05/03/2018.
 //
 
-#ifndef CEREALIZABLE_BINARY_HPP
-#define CEREALIZABLE_BINARY_HPP
+#ifndef CEREALIZABLE_BINARYSTREAM_HPP
+#define CEREALIZABLE_BINARYSTREAM_HPP
 
 #include <vector>
 #include <cstdlib>
@@ -55,4 +55,4 @@ namespace Cerealization
     }
 }
 
-#endif //CEREALIZABLE_BINARY_HPP
+#endif //CEREALIZABLE_BINARYSTREAM_HPP
