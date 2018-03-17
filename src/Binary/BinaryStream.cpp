@@ -22,7 +22,7 @@ Cerealization::Cerealizer::BinaryStream::BinaryStream(size_t size) :
 }
 
 Cerealization::Cerealizer::BinaryStream::BinaryStream(Byte *data, size_t size) :
-    BinaryStream(size)
+    BinaryStream()
 {
     Write(data, size);
 }
