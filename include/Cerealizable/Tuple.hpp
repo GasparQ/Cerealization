@@ -50,7 +50,7 @@ namespace Cerealization
 
             }
 
-            explicit Tuple(First &&fval, Args &&... values) :
+            explicit Tuple(First const &fval, Args const &... values) :
                     data {
                             new First(fval),
                             (new Args(values))...
@@ -135,6 +135,9 @@ namespace Cerealization
             DataType data;
             const bool allocated;
         };
+
+        template <typename Key, typename Value>
+        using Pair = Tuple<Key, Value>;
     }
 }
 

@@ -195,5 +195,10 @@ int main()
     TestSerial<Cerealization::Cerealizer::JSONStream>(test3);
     TestSerial<Cerealization::Cerealizer::JSONStream>(testJson);
 
+    std::list<int> test_list = {3, 4, 2, 1};
+
+    TestSerial<Cerealization::Cerealizer::BinaryStream>(test_list);
+    TestSerial<Cerealization::Cerealizer::JSONStream>(test_list);
+
     return 0;
 }

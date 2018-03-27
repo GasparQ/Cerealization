@@ -8,5 +8,6 @@
 #include "JSONStream.hpp"
 #include "DefaultOperations.hpp"
 #include "Operations.hpp"
+#include "StructOperations.hpp"
 
 #endif //CEREALIZABLE_JSON_HPP

@@ -9,10 +9,14 @@ FILE(GLOB_RECURSE CEREAL_SOURCES ${CMAKE_SOURCE_DIR}/src/*.cpp)
 
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
-add_library(Ceralib ${CEREAL_SOURCES} ${CEREAL_INCLUDES})
+add_library(Cerealib ${CEREAL_SOURCES} ${CEREAL_INCLUDES})
 
-set_target_properties(Ceralib PROPERTIES LINKER_LANGUAGE CXX)
+set_target_properties(Cerealib PROPERTIES LINKER_LANGUAGE CXX)
+
+add_executable(Example main.cpp)
+
+target_link_libraries(Example Cerealib)
 
 set(CMAKE_VS_INCLUDE_INSTALL_TO_DEFAULT_BUILD 1)
-install(TARGETS Ceralib DESTINATION ${PROJECT_BINARY_DIR}/lib/bin)
+install(TARGETS Cerealib DESTINATION ${PROJECT_BINARY_DIR}/lib/bin)
 install(DIRECTORY include DESTINATION ${PROJECT_BINARY_DIR}/lib/include)

@@ -11,6 +11,7 @@
 #include <set>
 #include <unordered_set>
 #include <map>
+#include <unordered_map>
 
 namespace Cerealization
 {
@@ -27,7 +28,7 @@ namespace Cerealization
 
             }
 
-            List(Iterable const &value) :
+            explicit List(Iterable const &value) :
                     iterable{new Iterable(value)},
                     allocated(true)
             {
@@ -95,6 +96,9 @@ namespace Cerealization
 
         template <typename Key, typename Value>
         using Map = List<std::pair<Key, Value>, std::map<Key, Value>>;
+
+        template <typename Key, typename Value>
+        using UMap = List<std::pair<Key, Value>, std::unordered_map<Key, Value>>;
     }
 }
 

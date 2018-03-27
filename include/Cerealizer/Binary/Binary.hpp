@@ -8,5 +8,6 @@
 #include "BinaryStream.hpp"
 #include "DefaultOperations.hpp"
 #include "Operations.hpp"
+#include "StructOperations.hpp"
 
 #endif //CEREALIZABLE_BINARY_HPP
