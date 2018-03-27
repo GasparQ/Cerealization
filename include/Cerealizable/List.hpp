@@ -27,7 +27,7 @@ namespace Cerealization
 
             }
 
-            explicit List(Iterable const &value) :
+            List(Iterable const &value) :
                     iterable{new Iterable(value)},
                     allocated(true)
             {
