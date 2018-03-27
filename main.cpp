@@ -209,5 +209,19 @@ int main()
     TestSerial<Cerealization::Cerealizer::BinaryStream>(test_map);
     TestSerial<Cerealization::Cerealizer::JSONStream>(test_map);
 
+    test_list = tata;
+
+    TestSerial<Cerealization::Cerealizer::JSONStream>(test_list);
+
+    Cerealization::Cerealizable::Map<std::string, int> test_map_obj(std::map<std::string, int> {
+            {"toto", 3},
+            {"tutu", 4},
+            {"salut", 0}
+    });
+
+    test_map = test_map_obj;
+
+    TestSerial<Cerealization::Cerealizer::JSONStream>(test_map);
+
     return 0;
 }

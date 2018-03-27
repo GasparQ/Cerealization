@@ -28,7 +28,7 @@ namespace Cerealization
 
             }
 
-            explicit List(Iterable const &value) :
+            List(Iterable const &value) :
                     iterable{new Iterable(value)},
                     allocated(true)
             {
@@ -36,7 +36,7 @@ namespace Cerealization
             }
 
             List(std::initializer_list<Element> &&value) :
-                    iterable{new Iterable{value}},
+                    iterable{new Iterable(value)},
                     allocated(true)
             {
 
@@ -75,6 +75,12 @@ namespace Cerealization
             void clear() const
             {
                 iterable->clear();
+            }
+
+        public:
+            operator Iterable() const
+            {
+                return *iterable;
             }
 
         private:
