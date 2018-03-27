@@ -197,8 +197,17 @@ int main()
 
     std::list<int> test_list = {3, 4, 2, 1};
 
+    std::map<std::string, int> test_map = {
+            {"coucou", 3},
+            {"salut", 39},
+            {"932", 32}
+    };
+
     TestSerial<Cerealization::Cerealizer::BinaryStream>(test_list);
     TestSerial<Cerealization::Cerealizer::JSONStream>(test_list);
+
+    TestSerial<Cerealization::Cerealizer::BinaryStream>(test_map);
+    TestSerial<Cerealization::Cerealizer::JSONStream>(test_map);
 
     return 0;
 }
