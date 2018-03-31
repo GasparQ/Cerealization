@@ -5,6 +5,7 @@
 #ifndef CEREALIZATION_TUPLE_HPP
 #define CEREALIZATION_TUPLE_HPP
 
+#include <utility>
 #include <tuple>
 #include <memory>
 
@@ -25,9 +26,9 @@ namespace Cerealization
             template<size_t i> using TElemType = typename TElem<i>::type;
 
         private:
-            using seq = std::make_index_sequence<sizeof...(Args) + 1>;
+            using seq = std::index_sequence_for <First, Args...>;
 
-            template<size_t ... idxs> using seqT = std::integer_sequence<size_t, idxs...>;
+            template<size_t ... idxs> using seqT = std::index_sequence <idxs...>;
 
         private:
             class Deleter
