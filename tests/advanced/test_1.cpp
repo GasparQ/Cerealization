@@ -141,6 +141,11 @@ void TestSerial(T const &data)
     assert(data == witness);
 }
 
+void applyer(int x, int y)
+{
+    std::cout << "Apply function : { \"x\": " << x << ", \"y\": " << y << "}" << std::endl;
+}
+
 int main()
 {
     Cerealization::Cerealizable::Scalar<int> titi(42);
@@ -222,6 +227,9 @@ int main()
     test_map = test_map_obj;
 
     TestSerial<Cerealization::Cerealizer::JSONStream>(test_map);
+
+    obj.apply(applyer);
+    toto.apply(applyer);
 
     return 0;
 }
