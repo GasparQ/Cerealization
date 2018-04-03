@@ -25,4 +25,10 @@ target_link_libraries(AdvancedExemple1 Cerealib)
 
 enable_testing()
 
-add_test(cereal_test Debug/ModelCereal.exe)
+if (WIN32)
+    set(EXE_SUFFIX ".exe")
+else()
+    set(EXE_SUFFIX "")
+endif()
+
+add_test(cereal_test ${EXECUTABLE_OUTPUT_PATH}/ModelCereal${EXE_SUFFIX})
