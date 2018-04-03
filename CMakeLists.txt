@@ -13,10 +13,16 @@ add_library(Cerealib ${CEREAL_SOURCES} ${CEREAL_INCLUDES})
 
 set_target_properties(Cerealib PROPERTIES LINKER_LANGUAGE CXX)
 
-add_executable(Example main.cpp)
-
-target_link_libraries(Example Cerealib)
-
 set(CMAKE_VS_INCLUDE_INSTALL_TO_DEFAULT_BUILD 1)
 install(TARGETS Cerealib DESTINATION ${PROJECT_BINARY_DIR}/lib/bin)
 install(DIRECTORY include DESTINATION ${PROJECT_BINARY_DIR}/lib/include)
+
+add_executable(ModelCereal tests/simple/test_model_cereal.cpp)
+target_link_libraries(ModelCereal Cerealib)
+
+add_executable(AdvancedExemple1 tests/advanced/test_1.cpp)
+target_link_libraries(AdvancedExemple1 Cerealib)
+
+enable_testing()
+
+add_test(cereal_test ModelCereal)

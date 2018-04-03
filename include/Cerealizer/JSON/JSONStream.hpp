@@ -40,6 +40,11 @@ namespace Cerealization
                 }
             }
 
+            void ReadUntil(std::string &dst, char delim)
+            {
+                std::getline(buffer, dst, delim);
+            }
+
             template <typename T>
             void Write(T const &src)
             {

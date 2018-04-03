@@ -17,18 +17,72 @@ namespace Cerealization
         class Tuple
         {
         private:
-            template<typename T> using Elem = T *;
+            template<typename T>
+            class Elem
+            {
+            public:
+                using type = T;
+                using ptr = T *;
+
+            public:
+                Elem(ptr dat) :
+                    dat(dat)
+                {
+
+                }
+
+                Elem(Elem<T> const &ref) :
+                    dat(new T(ref.get()))
+                {
+
+                }
+
+                Elem<T> &operator=(Elem<T> const &ref)
+                {
+                    set(ref.get());
+                    return *this;
+                }
+
+            public:
+                bool operator==(Elem<T> const &ref) const
+                {
+                    return get() == ref.get();
+                }
+
+                bool operator!=(Elem<T> const &ref) const
+                {
+                    return get() != ref.get();
+                }
+
+                type &get() const
+                {
+                    return *dat;
+                }
+
+                int set(T const &ref) const
+                {
+                    get() = ref;
+                }
+
+                int release()
+                {
+                    delete(dat);
+                }
+
+            private:
+                ptr dat;
+            };
 
             using DataType = std::tuple<Elem<First>, Elem<Args>...>;
 
-            template<size_t i> using TElem = std::tuple_element<i, std::tuple<Elem<First>, Elem<Args>...>>;
+            template<size_t i> using TElem = std::tuple_element<i, DataType>;
 
             template<size_t i> using TElemType = typename TElem<i>::type;
 
         private:
             using seq = std::index_sequence_for <First, Args...>;
 
-            template<size_t ... idxs> using seqT = std::index_sequence <idxs...>;
+            template <size_t ... idx> using seqT = std::index_sequence <idx...>;
 
         private:
             class Deleter
@@ -69,26 +123,56 @@ namespace Cerealization
 
             }
 
+            Tuple(Tuple<First, Args...> const &ref) :
+                    data(ref.data),
+                    allocated(true)
+            {
+
+            }
+
             virtual ~Tuple()
             {
                 if (allocated)
                 {
-                    Deleter deleter;
-                    forEach(deleter);
+                    _delete(seq());
                 }
+            }
+
+            Tuple<First, Args...>   &operator=(Tuple<First, Args...> const &ref)
+            {
+                data = ref.data;
+                return *this;
+            }
+
+        private:
+            template <size_t ... idxs>
+            void _delete(seqT<idxs...>)
+            {
+                std::initializer_list<int>{(std::get<idxs>(data).release())...};
+            }
+
+        public:
+            bool operator==(Tuple<First, Args...> const &ref) const
+            {
+                return data == ref.data;
+            }
+
+            bool operator!=(Tuple<First, Args...> const &ref) const
+            {
+                return data != ref.data;
             }
 
         public:
             template<size_t index, typename Value>
             void set(Value &&value)
             {
-                *std::get<index>(data) = value;
+                get<index>() = value;
             }
 
             template<size_t index>
-            typename TElemType<index>::element_type &get()
+            typename TElemType<index>::type &get() const
             {
-                return *std::get<index>(data);
+                return std::get<index>(data).get();
             }
 
         public:
@@ -102,20 +186,20 @@ namespace Cerealization
             template<typename Callable, size_t ... idxs>
             void _forEach(Callable &tocall, seqT<idxs...>) const
             {
-                _forEach(tocall, (std::get<idxs>(data))...);
+                _forEach(tocall, get<idxs>()...);
             }
 
             template<typename Callable, typename F, typename ... Nexts>
-            void _forEach(Callable &tocall, Elem<F> const &tosend, Nexts const &... nexts) const
+            void _forEach(Callable &tocall, F &tosend, Nexts &... nexts) const
             {
-                tocall(*tosend);
+                tocall(tosend);
                 _forEach(tocall, nexts...);
             }
 
             template<typename Callable, typename L>
-            void _forEach(Callable &tocall, Elem<L> const &last) const
+            void _forEach(Callable &tocall, L &last) const
             {
-                tocall(*last);
+                tocall(last);
             }
 
         public:
@@ -129,7 +213,7 @@ namespace Cerealization
             template <typename Callable, size_t ... idxs>
             void _apply(Callable const &tocall, seqT<idxs...>) const
             {
-                tocall((*std::get<idxs>(data))...);
+                tocall((std::get<idxs>(data).get())...);
             }
 
         private:

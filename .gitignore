@@ -31,3 +31,5 @@
 cmake-build-debug
 cmake-install
 CerealLib
+
+lib

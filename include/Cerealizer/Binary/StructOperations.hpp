@@ -38,15 +38,6 @@ BinaryStream    &operator<<(BinaryStream &stream, std::set<T> const &value)
     return stream;
 }
 
-template <typename T>
-BinaryStream    &operator<<(BinaryStream &stream, std::unordered_set<T> const &value)
-{
-    USet<T> toser(value);
-
-    stream << toser;
-    return stream;
-}
-
 template <typename Key, typename Value>
 BinaryStream &operator<<(BinaryStream &stream, std::pair<Key, Value> const &value)
 {
@@ -60,15 +51,6 @@ template <typename Key, typename Value>
 BinaryStream &operator<<(BinaryStream &stream, std::map<Key, Value> const &value)
 {
     Map<Key, Value> toser(value);
-
-    stream << toser;
-    return stream;
-}
-
-template <typename Key, typename Value>
-BinaryStream &operator<<(BinaryStream &stream, std::unordered_map<Key, Value> const &value)
-{
-    UMap<Key, Value> toser(value);
 
     stream << toser;
     return stream;
@@ -102,15 +84,6 @@ BinaryStream    &operator>>(BinaryStream &stream, std::set<T> &value)
     return stream;
 }
 
-template <typename T>
-BinaryStream    &operator>>(BinaryStream &stream, std::unordered_set<T> &value)
-{
-    USet<T> toser(value);
-
-    stream >> toser;
-    return stream;
-}
-
 template <typename Key, typename Value>
 BinaryStream &operator>>(BinaryStream &stream, std::pair<Key, Value> &value)
 {
@@ -124,15 +97,6 @@ template <typename Key, typename Value>
 BinaryStream &operator>>(BinaryStream &stream, std::map<Key, Value> &value)
 {
     Map<Key, Value> toser(value);
-
-    stream >> toser;
-    return stream;
-}
-
-template <typename Key, typename Value>
-BinaryStream &operator>>(BinaryStream &stream, std::unordered_map<Key, Value> &value)
-{
-    UMap<Key, Value> toser(value);
 
     stream >> toser;
     return stream;

@@ -61,7 +61,7 @@ namespace Cerealization
                 setNames({attr.first, attrs.first...});
             }
 
-            explicit Object(Element<First> &&fval, Element<Args> &&... ovals) :
+            explicit Object(Element<First> const &fval, Element<Args> const &... ovals) :
                 Tuple<First, Args...> {
                     fval.second,
                     ovals.second...
@@ -84,6 +84,31 @@ namespace Cerealization
                 setNames(std::vector<Name>(sizeof...(Args) + 1, Name()));
             }
 
+            Object(Object<First, Args...> const &ref) :
+                Tuple<First, Args...>(ref),
+                names(ref.names)
+            {
+
+            }
+
+            Object<First, Args...>  &operator=(Object<First, Args...> const &ref)
+            {
+                Tuple<First, Args...>::operator=(ref);
+                names = ref.names;
+                return *this;
+            }
+
+        public:
+            bool operator==(Object<First, Args...> const &ref) const
+            {
+                return Tuple<First, Args...>::operator==(ref);
+            }
+
+            bool operator!=(Object<First, Args...> const &ref) const
+            {
+                return Tuple<First, Args...>::operator!=(ref);
+            }
+
         public:
             template<typename Callable>
             void forEach(Callable &tocall) const
@@ -94,7 +119,11 @@ namespace Cerealization
             }
 
         public:
-            using Tuple<First, Args...>::apply;
+            template <typename Callable>
+            void apply(Callable const &tocal) const
+            {
+                Tuple<First, Args...>::apply(tocal);
+            }
 
         private:
             void setNames(std::vector<std::string> const &toset)

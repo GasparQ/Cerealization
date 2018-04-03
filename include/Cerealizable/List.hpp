@@ -36,7 +36,7 @@ namespace Cerealization
             }
 
             List(std::initializer_list<Element> &&value) :
-                    iterable{new Iterable(value)},
+                    iterable{new Iterable(value.begin(), value.end())},
                     allocated(true)
             {
 
@@ -49,10 +49,33 @@ namespace Cerealization
 
             }
 
+            List(List<Element, Iterable> const &ref) :
+                iterable(new Iterable(ref.get())),
+                allocated(true)
+            {
+
+            }
+
             virtual ~List()
             {
                 if (allocated)
                     delete(iterable);
+            }
+
+            bool operator==(List<Element, Iterable> const &ref) const
+            {
+                return get() == ref.get();
+            }
+
+            bool operator!=(List<Element, Iterable> const &ref) const
+            {
+                return get() != ref.get();
+            }
+
+            List<Element, Iterable> &operator=(List<Element, Iterable> const &cpy)
+            {
+                get() = cpy.get();
+                return *this;
             }
 
         public:
@@ -64,6 +87,11 @@ namespace Cerealization
             const Iterable &get() const
             {
                 return *iterable;
+            }
+
+            void set(Iterable const &ref)
+            {
+                get() = ref;
             }
 
         public:
@@ -89,7 +117,6 @@ namespace Cerealization
         };
 
         using String = List<char, std::string>;
-        using CString = List<const char, const std::string>;
 
         template <typename T>
         using Vector = List<T, std::vector<T>>;
@@ -97,14 +124,8 @@ namespace Cerealization
         template <typename T>
         using Set = List<T, std::set<T>>;
 
-        template <typename T>
-        using USet = List<T, std::unordered_set<T>>;
-
         template <typename Key, typename Value>
         using Map = List<std::pair<Key, Value>, std::map<Key, Value>>;
-
-        template <typename Key, typename Value>
-        using UMap = List<std::pair<Key, Value>, std::unordered_map<Key, Value>>;
     }
 }
 

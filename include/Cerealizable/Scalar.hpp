@@ -31,10 +31,32 @@ namespace Cerealization
 
             }
 
+            Scalar(Scalar<T> const &ref) :
+                Scalar(ref.get())
+            {
+
+            }
+
             virtual ~Scalar()
             {
                 if (allocated)
                     delete tohandle;
+            }
+
+            bool operator==(Scalar<T> const &ref) const
+            {
+                return get() == ref.get();
+            }
+
+            bool operator!=(Scalar<T> const &ref) const
+            {
+                return get != ref.get();
+            }
+
+            Scalar<T>   &operator=(Scalar<T> const &ref)
+            {
+                get() = ref.get();
+                return *this;
             }
 
         public:
