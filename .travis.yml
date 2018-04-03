@@ -1,0 +1,10 @@
+langage: cpp
+
+compiler: clang
+
+script:
+  - mkdir build
+  - cd build
+  - cmake ..
+  - cmake --build . --target ALL_BUILD
+  - cmake --build . --target RUN_TESTS
