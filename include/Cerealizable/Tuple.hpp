@@ -61,12 +61,12 @@ namespace Cerealization
 
                 int set(T const &ref) const
                 {
-                    get() = ref;
+                    get() = ref; return 0;
                 }
 
                 int release()
                 {
-                    delete(dat);
+                    delete(dat); return 0;
                 }
 
             private:

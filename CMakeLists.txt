@@ -25,4 +25,4 @@ target_link_libraries(AdvancedExemple1 Cerealib)
 
 enable_testing()
 
-add_test(cereal_test ModelCereal)
+add_test(cereal_test Debug/ModelCereal.exe)
