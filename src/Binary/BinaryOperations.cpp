@@ -2,7 +2,8 @@
 // Created by GasparQ on 07/03/2018.
 //
 
-#include "Cerealizer/Binary/Binary.hpp"
+#include "Cerealizer/Binary/DefaultOperations.hpp"
+#include "Cerealizer/Binary/ModelOperations.hpp"
 
 using namespace Cerealization::Cerealizer;
 

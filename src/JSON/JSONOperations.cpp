@@ -2,7 +2,8 @@
 // Created by GasparQ on 07/03/2018.
 //
 
-#include "Cerealizer/JSON/JSON.hpp"
+#include "Cerealizer/JSON/DefaultOperations.hpp"
+#include "Cerealizer/JSON/ModelOperations.hpp"
 
 Cerealization::Cerealizer::JSONStream &operator<<(Cerealization::Cerealizer::JSONStream &output, char data)
 {
