@@ -8,7 +8,7 @@
 #include "Cerealizable/List.hpp"
 #include "Cerealizable/Tuple.hpp"
 
-#include "Operations.hpp"
+#include "ModelOperations.hpp"
 
 template <typename T>
 JSONStream    &operator<<(JSONStream &stream, std::list<T> const &value)
@@ -16,12 +16,6 @@ JSONStream    &operator<<(JSONStream &stream, std::list<T> const &value)
     List<T> toser(value);
 
     stream << toser;
-    return stream;
-}
-
-JSONStream &operator<<(JSONStream &stream, String const &value)
-{
-    stream << value.get();
     return stream;
 }
 
@@ -67,15 +61,6 @@ JSONStream    &operator>>(JSONStream &stream, std::list<T> &value)
     List<T> toser(value);
 
     stream >> toser;
-    return stream;
-}
-
-JSONStream  &operator>>(JSONStream &stream, String &value)
-{
-    std::string data;
-
-    stream >> data;
-    value.set(data);
     return stream;
 }
 

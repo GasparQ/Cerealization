@@ -1,105 +1,79 @@
 //
-// Created by GasparQ on 07/03/2018.
+// Created by GasparQ on 04/04/2018.
 //
 
-#ifndef CEREALIZABLE_BINARY_OPERATIONS_HPP
-#define CEREALIZABLE_BINARY_OPERATIONS_HPP
+#ifndef CEREALIZATION_CEREALIZER_BINARY_OPERATIONS_HPP
+#define CEREALIZATION_CEREALIZER_BINARY_OPERATIONS_HPP
 
-#include "Cerealizable/Scalar.hpp"
-#include "Cerealizable/List.hpp"
-#include "Cerealizable/Tuple.hpp"
-#include "Cerealizable/Object.hpp"
-#include "BinaryStream.hpp"
-#include "BinaryTuple.hpp"
-#include "BinaryObject.hpp"
+#include <list>
+#include <set>
+#include <vector>
+#include <map>
+
 #include "DefaultOperations.hpp"
+#include "Cerealizable/DataDecl.hpp"
 
-using namespace Cerealization::Cerealizer;
-using namespace Cerealization::Cerealizable;
-
-template <typename T>
-BinaryStream &operator<<(BinaryStream &output, Scalar<T> const &data)
-{
-    return output << data.get();
-}
-
-template <typename Element, typename Iterable>
-BinaryStream &operator<<(BinaryStream &output, List<Element, Iterable> const &data)
-{
-    BinaryStream cpy;
-    uint32_t size = 0;
-
-    for (Element const &curr : data.get())
-    {
-        cpy << curr;
-        ++size;
-    }
-    output << size << cpy;
-    return output;
-}
-
-template <typename First, typename ... Nexts>
-BinaryStream &operator<<(BinaryStream &output, Tuple<First, Nexts...> const &data)
-{
-    BinaryTuple::Cereal ser(output);
-
-    data.forEach(ser);
-
-    return output;
-}
-
-template <typename First, typename ... Nexts>
-BinaryStream &operator<<(BinaryStream &output, Object<First, Nexts...> const &data)
-{
-    BinaryObject::Cereal ser(output);
-
-    data.forEach(ser);
-
-    return output;
-}
+/*
+ * Operator <<
+ */
 
 template <typename T>
-BinaryStream &operator>>(BinaryStream &output, Scalar<T> &data)
-{
-    return output >> data.get();
-}
+Cerealization::Cerealizer::BinaryStream &operator<<(Cerealization::Cerealizer::BinaryStream &stream, std::list<T> const &value);
+
+template <typename T>
+Cerealization::Cerealizer::BinaryStream &operator<<(Cerealization::Cerealizer::BinaryStream &stream, std::vector<T> const &value);
+
+template <typename T>
+Cerealization::Cerealizer::BinaryStream &operator<<(Cerealization::Cerealizer::BinaryStream &stream, std::set<T> const &value);
+
+template <typename Key, typename Value>
+Cerealization::Cerealizer::BinaryStream &operator<<(Cerealization::Cerealizer::BinaryStream &stream, std::pair<Key, Value> const &value);
+
+template <typename Key, typename Value>
+Cerealization::Cerealizer::BinaryStream &operator<<(Cerealization::Cerealizer::BinaryStream &stream, std::map<Key, Value> const &value);
+
+template <typename T>
+Cerealization::Cerealizer::BinaryStream &operator<<(Cerealization::Cerealizer::BinaryStream &output, Cerealization::Cerealizable::Scalar<T> const &data);
 
 template <typename Element, typename Iterable>
-BinaryStream &operator>>(BinaryStream &output, List<Element, Iterable> const &data)
-{
-    uint32_t size;
-
-    data.clear();
-    output >> size;
-    for (uint32_t i = 0; i < size; i++)
-    {
-        Element e;
-
-        output >> e;
-        data.push_back(e);
-    }
-    return output;
-}
+Cerealization::Cerealizer::BinaryStream &operator<<(Cerealization::Cerealizer::BinaryStream &output, Cerealization::Cerealizable::List<Element, Iterable> const &data);
 
 template <typename First, typename ... Nexts>
-BinaryStream &operator>>(BinaryStream &output, Tuple<First, Nexts...> const &data)
-{
-    BinaryTuple::Decereal des(output);
-
-    data.forEach(des);
-
-    return output;
-}
-
+Cerealization::Cerealizer::BinaryStream &operator<<(Cerealization::Cerealizer::BinaryStream &output, Cerealization::Cerealizable::Tuple<First, Nexts...> const &data);
 
 template <typename First, typename ... Nexts>
-BinaryStream &operator>>(BinaryStream &output, Object<First, Nexts...> const &data)
-{
-    BinaryObject::Decereal des(output);
+Cerealization::Cerealizer::BinaryStream &operator<<(Cerealization::Cerealizer::BinaryStream &output, Cerealization::Cerealizable::Object<First, Nexts...> const &data);
 
-    data.forEach(des);
+/*
+ * Operator >>
+ */
 
-    return output;
-}
+template <typename T>
+Cerealization::Cerealizer::BinaryStream &operator>>(Cerealization::Cerealizer::BinaryStream &stream, std::list<T> &value);
 
-#endif //CEREALIZABLE_BINARY_OPERATIONS_HPP
+template <typename T>
+Cerealization::Cerealizer::BinaryStream &operator>>(Cerealization::Cerealizer::BinaryStream &stream, std::vector<T> &value);
+
+template <typename T>
+Cerealization::Cerealizer::BinaryStream &operator>>(Cerealization::Cerealizer::BinaryStream &stream, std::set<T> &value);
+
+template <typename Key, typename Value>
+Cerealization::Cerealizer::BinaryStream &operator>>(Cerealization::Cerealizer::BinaryStream &stream, std::pair<Key, Value> &value);
+
+template <typename Key, typename Value>
+Cerealization::Cerealizer::BinaryStream &operator>>(Cerealization::Cerealizer::BinaryStream &stream, std::map<Key, Value> &value);
+
+template <typename T>
+Cerealization::Cerealizer::BinaryStream &operator>>(Cerealization::Cerealizer::BinaryStream &output, Cerealization::Cerealizable::Scalar<T> &data);
+
+template <typename Element, typename Iterable>
+Cerealization::Cerealizer::BinaryStream &operator>>(Cerealization::Cerealizer::BinaryStream &output, Cerealization::Cerealizable::List<Element, Iterable> const &data);
+
+template <typename First, typename ... Nexts>
+Cerealization::Cerealizer::BinaryStream &operator>>(Cerealization::Cerealizer::BinaryStream &output, Cerealization::Cerealizable::Tuple<First, Nexts...> const &data);
+
+template <typename First, typename ... Nexts>
+Cerealization::Cerealizer::BinaryStream &operator>>(Cerealization::Cerealizer::BinaryStream &output, Cerealization::Cerealizable::Object<First, Nexts...> const &data);
+
+
+#endif //CEREALIZATION_OPERATIONS_HPP

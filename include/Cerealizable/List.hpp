@@ -115,17 +115,6 @@ namespace Cerealization
             Iterable *iterable;
             const bool allocated;
         };
-
-        using String = List<char, std::string>;
-
-        template <typename T>
-        using Vector = List<T, std::vector<T>>;
-
-        template <typename T>
-        using Set = List<T, std::set<T>>;
-
-        template <typename Key, typename Value>
-        using Map = List<std::pair<Key, Value>, std::map<Key, Value>>;
     }
 }
 

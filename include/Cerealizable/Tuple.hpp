@@ -148,7 +148,7 @@ namespace Cerealization
             template <size_t ... idxs>
             void _delete(seqT<idxs...>)
             {
-                std::initializer_list<int>{(std::get<idxs>(data).release())...};
+                (void)std::initializer_list<int>{(std::get<idxs>(data).release())...};
             }
 
         public:
@@ -220,9 +220,6 @@ namespace Cerealization
             DataType data;
             const bool allocated;
         };
-
-        template <typename Key, typename Value>
-        using Pair = Tuple<Key, Value>;
     }
 }
 

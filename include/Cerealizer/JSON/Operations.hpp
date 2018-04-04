@@ -1,121 +1,82 @@
 //
-// Created by GasparQ on 07/03/2018.
+// Created by GasparQ on 04/04/2018.
 //
 
-#ifndef CEREALIZABLE_JSON_OPERATIONS_HPP
-#define CEREALIZABLE_JSON_OPERATIONS_HPP
+#ifndef CEREALIZATION_CEREALIZER_JSON_OPERATIONS_HPP
+#define CEREALIZATION_CEREALIZER_JSON_OPERATIONS_HPP
 
-#include "Cerealizable/Scalar.hpp"
-#include "Cerealizable/List.hpp"
-#include "Cerealizable/Object.hpp"
-#include "Cerealizable/Tuple.hpp"
-#include "JSONStream.hpp"
+#include <list>
+#include <set>
+#include <vector>
+#include <map>
+
 #include "DefaultOperations.hpp"
-#include "JSONTuple.hpp"
-#include "JSONObject.hpp"
+#include "Cerealizable/DataDecl.hpp"
 
-using namespace Cerealization::Cerealizer;
-using namespace Cerealization::Cerealizable;
-
-template <typename T>
-JSONStream  &operator<<(JSONStream &output, Scalar<T> const &data)
-{
-    return output << data.get();
-}
-
-template <typename Element, typename Iterable>
-JSONStream &operator<<(JSONStream &output, List<Element, Iterable> const &data)
-{
-    JSONStream cpy;
-    bool first = true;
-
-    for (Element const &curr : data.get())
-    {
-        if (first)
-            first = false;
-        else
-            cpy.Write(", ");
-        cpy << curr;
-    }
-    output.Write("[");
-    output << cpy;
-    output.Write("]");
-    return output;
-}
-
-template <typename First, typename ... Nexts>
-JSONStream &operator<<(JSONStream &output, Tuple<First, Nexts...> const &data)
-{
-    JSONTuple::Cereal ser(output);
-
-    output.Write("[");
-    data.forEach(ser);
-    output.Write("]");
-    return output;
-}
-
-template <typename First, typename ... Nexts>
-JSONStream &operator<<(JSONStream &output, Object<First, Nexts...> const &data)
-{
-    JSONObject::Cereal ser(output);
-
-    output.Write("{");
-    data.forEach(ser);
-    output.Write("}");
-    return output;
-}
+/*
+ * Operator <<
+ */
 
 template <typename T>
-JSONStream &operator>>(JSONStream &output, Scalar<T> &data)
-{
-    output >> data.get();
-    return output;
-}
+Cerealization::Cerealizer::JSONStream &operator<<(Cerealization::Cerealizer::JSONStream &stream, std::list<T> const &value);
+
+template <typename T>
+Cerealization::Cerealizer::JSONStream &operator<<(Cerealization::Cerealizer::JSONStream &stream, std::vector<T> const &value);
+
+template <typename T>
+Cerealization::Cerealizer::JSONStream &operator<<(Cerealization::Cerealizer::JSONStream &stream, std::set<T> const &value);
+
+template <typename Key, typename Value>
+Cerealization::Cerealizer::JSONStream &operator<<(Cerealization::Cerealizer::JSONStream &stream, std::pair<Key, Value> const &value);
+
+template <typename Key, typename Value>
+Cerealization::Cerealizer::JSONStream &operator<<(Cerealization::Cerealizer::JSONStream &stream, std::map<Key, Value> const &value);
+
+template <typename T>
+Cerealization::Cerealizer::JSONStream &operator<<(Cerealization::Cerealizer::JSONStream &output, Cerealization::Cerealizable::Scalar<T> const &data);
 
 template <typename Element, typename Iterable>
-JSONStream &operator>>(JSONStream &output, List<Element, Iterable> &data)
-{
-    bool first = true;
+Cerealization::Cerealizer::JSONStream &operator<<(Cerealization::Cerealizer::JSONStream &output, Cerealization::Cerealizable::List<Element, Iterable> const &data);
 
-    data.clear();
-    output.ignore(1); //ignore "["
-    while (output.Size() && output.nextCharacter() != ']')
-    {
-        Element e;
-
-        if (first)
-            first = false;
-        else
-            output.ignore(2); //ignore ", "
-        output >> e;
-        data.push_back(e);
-    }
-    output.ignore(1); //ignore "]"
-    return output;
-};
+Cerealization::Cerealizer::JSONStream &operator<<(Cerealization::Cerealizer::JSONStream &stream, Cerealization::Cerealizable::String const &value);
 
 template <typename First, typename ... Nexts>
-JSONStream &operator>>(JSONStream &output, Tuple<First, Nexts...> &data)
-{
-    JSONTuple::Decereal des(output);
-
-    output.ignore(1);   //ignore "["
-    data.forEach(des);
-    output.ignore(1);   //ignore "]"
-
-    return output;
-}
+Cerealization::Cerealizer::JSONStream &operator<<(Cerealization::Cerealizer::JSONStream &output, Cerealization::Cerealizable::Tuple<First, Nexts...> const &data);
 
 template <typename First, typename ... Nexts>
-JSONStream &operator>>(JSONStream &output, Object<First, Nexts...> &data)
-{
-    JSONObject::Decereal des(output);
+Cerealization::Cerealizer::JSONStream &operator<<(Cerealization::Cerealizer::JSONStream &output, Cerealization::Cerealizable::Object<First, Nexts...> const &data);
 
-    output.ignore(1);   //ignore "{"
-    data.forEach(des);
-    output.ignore(1);   //ignore "}"
+/*
+ * Operator >>
+ */
 
-    return output;
-}
+template <typename T>
+Cerealization::Cerealizer::JSONStream &operator>>(Cerealization::Cerealizer::JSONStream &stream, std::list<T> &value);
 
-#endif //CEREALIZABLE_JSON_OPERATIONS_HPP
+template <typename T>
+Cerealization::Cerealizer::JSONStream &operator>>(Cerealization::Cerealizer::JSONStream &stream, std::vector<T> &value);
+
+template <typename T>
+Cerealization::Cerealizer::JSONStream &operator>>(Cerealization::Cerealizer::JSONStream &stream, std::set<T> &value);
+
+template <typename Key, typename Value>
+Cerealization::Cerealizer::JSONStream &operator>>(Cerealization::Cerealizer::JSONStream &stream, std::pair<Key, Value> &value);
+
+template <typename Key, typename Value>
+Cerealization::Cerealizer::JSONStream &operator>>(Cerealization::Cerealizer::JSONStream &stream, std::map<Key, Value> &value);
+
+template <typename T>
+Cerealization::Cerealizer::JSONStream &operator>>(Cerealization::Cerealizer::JSONStream &output, Cerealization::Cerealizable::Scalar<T> &data);
+
+template <typename Element, typename Iterable>
+Cerealization::Cerealizer::JSONStream &operator>>(Cerealization::Cerealizer::JSONStream &output, Cerealization::Cerealizable::List<Element, Iterable> &data);
+
+Cerealization::Cerealizer::JSONStream &operator>>(Cerealization::Cerealizer::JSONStream &stream, Cerealization::Cerealizable::String &value);
+
+template <typename First, typename ... Nexts>
+Cerealization::Cerealizer::JSONStream &operator>>(Cerealization::Cerealizer::JSONStream &output, Cerealization::Cerealizable::Tuple<First, Nexts...> &data);
+
+template <typename First, typename ... Nexts>
+Cerealization::Cerealizer::JSONStream &operator>>(Cerealization::Cerealizer::JSONStream &output, Cerealization::Cerealizable::Object<First, Nexts...> &data);
+
+#endif //CEREALIZATION_OPERATIONS_HPP

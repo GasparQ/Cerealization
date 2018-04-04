@@ -50,7 +50,7 @@ namespace Cerealization
 
             bool operator!=(Scalar<T> const &ref) const
             {
-                return get != ref.get();
+                return get() != ref.get();
             }
 
             Scalar<T>   &operator=(Scalar<T> const &ref)
@@ -74,19 +74,6 @@ namespace Cerealization
             T          *tohandle;
             const bool allocated;
         };
-
-        using Char = Scalar<char>;
-        using UChar = Scalar<unsigned char>;
-        using Short = Scalar<short>;
-        using UShort = Scalar<unsigned short>;
-        using Int = Scalar<int>;
-        using UInt = Scalar<unsigned int>;
-        using Long = Scalar<long>;
-        using ULong = Scalar<unsigned long>;
-        using LongLong = Scalar<long long>;
-        using ULongLong = Scalar<unsigned long long>;
-        using Float = Scalar<float>;
-        using Double = Scalar<double>;
     }
 }
 

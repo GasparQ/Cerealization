@@ -3,7 +3,7 @@
 //
 
 #include "Cerealizer/Binary/DefaultOperations.hpp"
-#include "Cerealizer/Binary/Operations.hpp"
+#include "Cerealizer/Binary/ModelOperations.hpp"
 #include "Cerealizable/List.hpp"
 
 using namespace Cerealization::Cerealizer;

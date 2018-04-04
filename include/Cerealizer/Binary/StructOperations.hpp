@@ -8,10 +8,10 @@
 #include "Cerealizable/List.hpp"
 #include "Cerealizable/Tuple.hpp"
 
-#include "Operations.hpp"
+#include "ModelOperations.hpp"
 
 template <typename T>
-BinaryStream    &operator<<(BinaryStream &stream, std::list<T> const &value)
+BinaryStream &operator<<(BinaryStream &stream, std::list<T> const &value)
 {
     List<T> toser(value);
 
@@ -19,9 +19,8 @@ BinaryStream    &operator<<(BinaryStream &stream, std::list<T> const &value)
     return stream;
 }
 
-
 template <typename T>
-BinaryStream    &operator<<(BinaryStream &stream, std::vector<T> const &value)
+BinaryStream &operator<<(BinaryStream &stream, std::vector<T> const &value)
 {
     Vector<T> toser(value);
 
@@ -30,7 +29,7 @@ BinaryStream    &operator<<(BinaryStream &stream, std::vector<T> const &value)
 }
 
 template <typename T>
-BinaryStream    &operator<<(BinaryStream &stream, std::set<T> const &value)
+BinaryStream &operator<<(BinaryStream &stream, std::set<T> const &value)
 {
     Set<T> toser(value);
 
@@ -57,7 +56,7 @@ BinaryStream &operator<<(BinaryStream &stream, std::map<Key, Value> const &value
 }
 
 template <typename T>
-BinaryStream    &operator>>(BinaryStream &stream, std::list<T> &value)
+BinaryStream &operator>>(BinaryStream &stream, std::list<T> &value)
 {
     List<T> toser(value);
 
@@ -65,9 +64,8 @@ BinaryStream    &operator>>(BinaryStream &stream, std::list<T> &value)
     return stream;
 }
 
-
 template <typename T>
-BinaryStream    &operator>>(BinaryStream &stream, std::vector<T> &value)
+BinaryStream &operator>>(BinaryStream &stream, std::vector<T> &value)
 {
     Vector<T> toser(value);
 
@@ -76,7 +74,7 @@ BinaryStream    &operator>>(BinaryStream &stream, std::vector<T> &value)
 }
 
 template <typename T>
-BinaryStream    &operator>>(BinaryStream &stream, std::set<T> &value)
+BinaryStream &operator>>(BinaryStream &stream, std::set<T> &value)
 {
     Set<T> toser(value);
 
