@@ -5,8 +5,7 @@
 #ifndef CEREALIZABLE_JSONTUPLE_HPP
 #define CEREALIZABLE_JSONTUPLE_HPP
 
-#include "DefaultOperations.hpp"
-#include "JSONStream.hpp"
+#include "Operations.hpp"
 
 namespace Cerealization
 {

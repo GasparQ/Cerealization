@@ -5,7 +5,7 @@
 #ifndef CEREALIZABLE_BINARYTUPLE_HPP
 #define CEREALIZABLE_BINARYTUPLE_HPP
 
-#include "BinaryStream.hpp"
+#include "Operations.hpp"
 
 namespace Cerealization
 {

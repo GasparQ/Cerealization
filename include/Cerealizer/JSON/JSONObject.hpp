@@ -5,8 +5,7 @@
 #ifndef CEREALIZABLE_JSONOBJECT_HPP
 #define CEREALIZABLE_JSONOBJECT_HPP
 
-#include "JSONStream.hpp"
-#include "DefaultOperations.hpp"
+#include "Operations.hpp"
 
 namespace Cerealization
 {

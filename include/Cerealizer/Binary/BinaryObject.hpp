@@ -7,9 +7,7 @@
 
 #include <string>
 
-#include "Cerealizable/List.hpp"
-#include "BinaryStream.hpp"
-#include "DefaultOperations.hpp"
+#include "Operations.hpp"
 
 namespace Cerealization
 {
