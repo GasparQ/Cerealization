@@ -35,10 +35,10 @@ Cerealization::Cerealizer::JSONStream &operator<<(Cerealization::Cerealizer::JSO
 template <typename T>
 Cerealization::Cerealizer::JSONStream &operator<<(Cerealization::Cerealizer::JSONStream &output, Cerealization::Cerealizable::Scalar<T> const &data);
 
+Cerealization::Cerealizer::JSONStream &operator<<(Cerealization::Cerealizer::JSONStream &stream, Cerealization::Cerealizable::String const &value);
+
 template <typename Element, typename Iterable>
 Cerealization::Cerealizer::JSONStream &operator<<(Cerealization::Cerealizer::JSONStream &output, Cerealization::Cerealizable::List<Element, Iterable> const &data);
-
-Cerealization::Cerealizer::JSONStream &operator<<(Cerealization::Cerealizer::JSONStream &stream, Cerealization::Cerealizable::String const &value);
 
 template <typename First, typename ... Nexts>
 Cerealization::Cerealizer::JSONStream &operator<<(Cerealization::Cerealizer::JSONStream &output, Cerealization::Cerealizable::Tuple<First, Nexts...> const &data);
@@ -68,10 +68,10 @@ Cerealization::Cerealizer::JSONStream &operator>>(Cerealization::Cerealizer::JSO
 template <typename T>
 Cerealization::Cerealizer::JSONStream &operator>>(Cerealization::Cerealizer::JSONStream &output, Cerealization::Cerealizable::Scalar<T> &data);
 
+Cerealization::Cerealizer::JSONStream &operator>>(Cerealization::Cerealizer::JSONStream &stream, Cerealization::Cerealizable::String &value);
+
 template <typename Element, typename Iterable>
 Cerealization::Cerealizer::JSONStream &operator>>(Cerealization::Cerealizer::JSONStream &output, Cerealization::Cerealizable::List<Element, Iterable> &data);
-
-Cerealization::Cerealizer::JSONStream &operator>>(Cerealization::Cerealizer::JSONStream &stream, Cerealization::Cerealizable::String &value);
 
 template <typename First, typename ... Nexts>
 Cerealization::Cerealizer::JSONStream &operator>>(Cerealization::Cerealizer::JSONStream &output, Cerealization::Cerealizable::Tuple<First, Nexts...> &data);

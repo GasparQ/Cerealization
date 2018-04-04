@@ -41,12 +41,6 @@ JSONStream &operator<<(JSONStream &output, List<Element, Iterable> const &data)
     return output;
 }
 
-JSONStream &operator<<(JSONStream &stream, String const &value)
-{
-    stream << value.get();
-    return stream;
-}
-
 template <typename First, typename ... Nexts>
 JSONStream &operator<<(JSONStream &output, Tuple<First, Nexts...> const &data)
 {
@@ -96,15 +90,6 @@ JSONStream &operator>>(JSONStream &output, List<Element, Iterable> &data)
     }
     output.ignore(1); //ignore "]"
     return output;
-}
-
-JSONStream  &operator>>(JSONStream &stream, String &value)
-{
-    std::string data;
-
-    stream >> data;
-    value.set(data);
-    return stream;
 }
 
 template <typename First, typename ... Nexts>

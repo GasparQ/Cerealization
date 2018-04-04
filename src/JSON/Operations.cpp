@@ -2,7 +2,7 @@
 // Created by GasparQ on 07/03/2018.
 //
 
-#include "Cerealizer/JSON/DefaultOperations.hpp"
+#include "Cerealizer/JSON/JSON.hpp"
 
 Cerealization::Cerealizer::JSONStream &operator<<(Cerealization::Cerealizer::JSONStream &output, char data)
 {
@@ -77,11 +77,15 @@ Cerealization::Cerealizer::JSONStream &operator<<(Cerealization::Cerealizer::JSO
     return output;
 }
 
-Cerealization::Cerealizer::JSONStream &
-operator<<(Cerealization::Cerealizer::JSONStream &output, std::string const &data)
+Cerealization::Cerealizer::JSONStream &operator<<(Cerealization::Cerealizer::JSONStream &output, std::string const &data)
 {
     output.Write("\"" + data + "\"");
     return output;
+}
+
+Cerealization::Cerealizer::JSONStream &operator<<(Cerealization::Cerealizer::JSONStream &output, String const &data)
+{
+    return output << data.get();
 }
 
 Cerealization::Cerealizer::JSONStream &operator>>(Cerealization::Cerealizer::JSONStream &output, char &data)
@@ -163,4 +167,9 @@ Cerealization::Cerealizer::JSONStream &operator>>(Cerealization::Cerealizer::JSO
     output.ReadUntil(data, '"');
 //    data = data.substr(1, data.size() - 1);
     return output;
+}
+
+Cerealization::Cerealizer::JSONStream &operator>>(Cerealization::Cerealizer::JSONStream &output, String &data)
+{
+    return output >> data.get();
 }
